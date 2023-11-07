@@ -11,7 +11,12 @@
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-[//]: # (### Настройка переменных окружения)
+### Настройка переменных окружения
+
+Для настройки переменных окружения нужно создать файл `.env`.
+Либо использовать файл `.env.example`.
+
+    cp .env.example .env
 
 [//]: # ()
 [//]: # (Создайте `.env` файл в корне проекта с необходимыми переменными окружения:)
@@ -35,35 +40,30 @@
 
 Пересборка и запуск контейнера.
 
-```bash
-docker-compose up --build
-```
+    docker compose up --build
 
 Для запуска приложения и связанных с ним сервисов используйте следующую команду:
 
-```bash
-docker-compose up -d
-```
-Эта команда запустит все необходимые контейнеры в фоновом режиме.
+    docker compose up --build -d
+
+Эта команда соберёт и запустит все необходимые контейнеры в фоновом режиме.
 
 ### Выполнение миграций базы данных
 
 Для применения миграций базы данных выполните следующую команду:
 
-```bash
-docker-compose exec web alembic upgrade head
-```
+    docker compose exec web alembic upgrade head
 
 Если же необходимо автоматически сгенерировать миграцию, на основе существующей схемы, то нужно:
 1. обновить файл `alembic/env.py` - если добавили новые модели, проверьте что они импортируются
-2. запустить команду 
-```bash
-docker-compose exec web alembic revision --autogenerate -m '<описание миграции>'
-```
+2. запустить команду
+
+    docker compose exec web alembic revision --autogenerate -m '<описание миграции>'
+
 
 ### Проверка работоспособности
 
-Откройте веб-браузер и перейдите по адресу `http://localhost:8000` для доступа к API. 
+Откройте веб-браузер и перейдите по адресу `http://localhost:8000` для доступа к API.
 
 Интерфейс GraphQL будет доступен по адресу `http://localhost:8000/graphql`.
 
@@ -83,6 +83,8 @@ docker-compose exec web alembic revision --autogenerate -m '<описание м
 
 Для остановки и удаления всех связанных контейнеров (и сетей), созданных с помощью Docker Compose, выполните:
 
-```bash
-docker-compose down
-```
+    docker compose down
+
+Для удаления ещё volumes, нужно использовать флаг `-v`.
+
+    docker compose down -v
