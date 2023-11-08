@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  backend:
+    image: astro-backend
+    container_name: astro-backend
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - postgresql
+    env_file:
+      - .env
+
+  postgresql:
+    image: postgres:15
+    container_name: astro-postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:
